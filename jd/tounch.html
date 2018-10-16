@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        html,body{
+            /*height: 100%;*/
+        }
+        body{
+            background: pink;
+        }
+        div{
+            width: 20px;
+            height: 20px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+<script>
+    window.onload=function(){
+        var div=document.querySelector("div");
+        var startX=0;
+        var moveX=0;
+        var distanceX=0;
+        var startY=0;
+        var moveY=0;
+        var distanceY=0;
+        document.body.addEventListener("touchstart",function(event){
+            // console.log(event);
+            // console.log(event.touches[0]);
+            // console.log(event.changedTouches[0]);
+            
+            var startX=event.touches[0].clientX;
+            var startY=event.touches[0].clientY;
+            // console.log("touchstart:"+event.touches[0].clientX)
+        })
+        //手指移动时会触发
+            document.body.addEventListener('touchmove',function (event) {
+       /*     console.log('touchmove');
+            console.log(event);*/
+            // 这样 就能够获取到 我在X方向移动的距离了
+            moveX = event.touches[0].clientX -startX;
+            // console.log("touchmove:"+event.touches[0].clientX)
+            console.log('moveX:'+moveX);
+
+            moveY = event.touches[0].clientY -startY;
+            // 直接 修改 div的 transform
+            // 由于两边 是 字符串拼接 中间是 计算 一定要 加上括号 否则会当 字符串凭借
+            // document.querySelector("div").style.transform = 'translateX('+(moveX+distanceX)+'px)';
+            document.querySelector("div").style.transform = 'translate('+(distanceX+moveX)+'px,'+(distanceY+moveY)+'px)';
+        })
+
+        document.body.addEventListener("touchend",function(event){
+           // console.log(event)
+           //移动结束的时候记录移动的位置
+           distanceX+=moveX;
+           distanceY+=moveY;
+        })
+    }
+</script>
+</html>
